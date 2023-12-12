@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:geolocator/geolocator.dart';
@@ -15,9 +17,11 @@ class PoILocation extends StatefulWidget {
 }
 
 class _PoILocationState extends State<PoILocation> {
-  final LocationSettings locationSettings = LocationSettings(
-    accuracy: LocationAccuracy.high,
-    distanceFilter: 100,
+  final LocationSettings locationSettings =  AndroidSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 0,
+      intervalDuration: const Duration(milliseconds: 250),
+
   );
 
 
@@ -34,9 +38,12 @@ class _PoILocationState extends State<PoILocation> {
                 return Column(
                   children: [
                     Text("Current Location: ${position.latitude}:${position.longitude}"),
+                    Text("target Location: ${widget.poi.latitude}:${widget.poi.longitude}"),
+
+                    Text("timestamp: ${DateTime.now().millisecondsSinceEpoch}"),
                     Text("Heading: ${position.heading}"),
-                    Text("Distancia: ${Geolocator.distanceBetween(position.latitude, position.latitude, widget.poi.latitude, widget.poi.longitude)})"),
-                    Text("Bearing: ${Geolocator.bearingBetween(position.latitude, position.latitude, widget.poi.latitude, widget.poi.longitude)}"),
+                    Text("Distancia: ${Geolocator.distanceBetween(position.latitude, position.longitude, widget.poi.latitude, widget.poi.longitude)})"),
+                    Text("Bearing: ${Geolocator.bearingBetween(position.latitude, position.longitude, widget.poi.latitude, widget.poi.longitude)}"),
 
 
 
@@ -62,9 +69,9 @@ class _PoILocationState extends State<PoILocation> {
                               child: Text("Device does not have sensors !"),
                             );
 
-                          double poi_angle =-direction+Geolocator.bearingBetween(position.latitude, position.latitude, widget.poi.latitude, widget.poi.longitude);
-                          double poi_angle_normalized = ((poi_angle>20? 20: poi_angle<-20? -19.9: poi_angle)+20)/40;
-                          double distance = Geolocator.distanceBetween(position.latitude, position.latitude, widget.poi.latitude, widget.poi.longitude);
+                          double poi_angle =-direction+Geolocator.bearingBetween(position.latitude, position.longitude, widget.poi.latitude, widget.poi.longitude);
+                          double poi_angle_normalized = ((poi_angle>20? 20: poi_angle<-20? -19.9: poi_angle) +20)/40;
+                          double distance = Geolocator.distanceBetween(position.latitude, position.longitude, widget.poi.latitude, widget.poi.longitude);
 
                           return Column(
                             children: [

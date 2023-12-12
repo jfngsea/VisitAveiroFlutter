@@ -10,7 +10,9 @@ import 'package:visit_aveiro/models/PoIModel.dart';
 import '../../utils/permissions.dart';
 
 class ImmersiveCameraWidget extends StatefulWidget {
-  const ImmersiveCameraWidget({super.key});
+  const ImmersiveCameraWidget({super.key, required this.poi});
+
+  final PoIModel poi;
 
   @override
   State<ImmersiveCameraWidget> createState() => _ImmersiveCameraWidgetState();
@@ -46,7 +48,7 @@ class _ImmersiveCameraWidgetState extends State<ImmersiveCameraWidget> {
     return Stack(
       children: [
         CameraView(),
-        PoILocation(poi: PoIModel(40.639260, -7.680924),),
+        PoILocation(poi: widget.poi,),
       ],
     );
   }
