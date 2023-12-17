@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:project_test/views/add_local_page.dart';
 import 'package:project_test/views/gastronomy_page.dart';
 import 'package:project_test/views/history_page.dart';

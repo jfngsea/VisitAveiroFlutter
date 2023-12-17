@@ -44,16 +44,31 @@ class LocaisGastronomiaPage extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () => _showFullImage(context, local.fotoPath),
-                  child: local.fotoPath != null 
-                    ? SizedBox(
-                        height: 200, 
-                        width: double.infinity, 
-                        child: Image.file(
-                          File(local.fotoPath!),
-                          fit: BoxFit.cover,
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      local.fotoPath != null 
+                        ? SizedBox(
+                            height: 200, 
+                            width: double.infinity, 
+                            child: Image.file(
+                              File(local.fotoPath!),
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : const SizedBox(height: 200, child: Placeholder()),
+                      Container(
+                        width: double.infinity,
+                        color: Colors.black.withOpacity(0.5),
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        child: Text(
+                          local.name,
+                          style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
                         ),
-                      )
-                    : const SizedBox(height: 200, child: Placeholder()), 
+                      ),
+                    ],
+                  ),
                 ),
                 Text(local.address),
                 ElevatedButton(
