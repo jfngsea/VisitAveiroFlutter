@@ -97,7 +97,7 @@ void initState() {
 Widget build(BuildContext context) {
   return Scaffold(
       appBar: AppBar(
-        title: const Text('Map' , style: TextStyle(color: Colors.white)),
+        title: const Text('Map' , style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),

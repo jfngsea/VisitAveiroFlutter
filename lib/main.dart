@@ -69,7 +69,7 @@ void main() async {
   runApp(const MyApp());
   //clearHiveBox();
   WidgetsBinding.instance.addPostFrameCallback((_) async{
-    //await addLocalToHiveBox();
+    await addLocalToHiveBox();
     await printLocalData();
   });
   

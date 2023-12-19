@@ -21,19 +21,4 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     emit(LocationError(error.toString()));
   }
 }
-
-
-
-  Future<void> _checkAndRequestLocationPermission() async {
-  var status = await Permission.location.status;
-  if (!status.isGranted) {
-    status = await Permission.location.request();
-    if (!status.isGranted) {
-      throw Exception('Permissão de localização negada.');
-    }
-  }
-}
-
-
-
 }
