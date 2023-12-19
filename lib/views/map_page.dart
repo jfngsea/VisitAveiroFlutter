@@ -1,8 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api, must_be_immutable
 
+import 'package:VisitAveiroFlutter/models/local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hive/hive.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../bloc/location_bloc.dart';
 import '../bloc/location_event.dart';
@@ -17,22 +19,21 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  late GoogleMapController mapController;
+  GoogleMapController ? mapController;
   LatLng? currentPosition;
   Set<Marker> markers = {};
 
 @override
 void initState() {
   super.initState();
+  _loadAllLocals();
   final locationBloc = BlocProvider.of<LocationBloc>(context, listen: false);
   _checkAndRequestLocationPermission().then((_) {
     if (widget.coords != null) {
-      // Se coordenadas foram passadas diretamente, use-as
       currentPosition = widget.coords;
       _addCurrentLocationMarker(currentPosition!);
       _goToCurrentPosition(currentPosition!);
     } else {
-      // Se não, busca a localização atual
       locationBloc.add(FetchCurrentLocation());
     }
   });
@@ -55,8 +56,8 @@ void initState() {
   }
 
   void _goToCurrentPosition(LatLng position) {
-    mapController.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(target: position, zoom: 15.0),
+    mapController?.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(target: position, zoom: 20.0),
     ));
     _addCurrentLocationMarker(position);
   }
@@ -68,23 +69,39 @@ void initState() {
       infoWindow: const InfoWindow(
         title: 'Localização Atual',
       ),
+      icon: BitmapDescriptor.defaultMarkerWithHue((BitmapDescriptor.hueGreen))
+
     );
 
     setState(() {
-      markers.clear();
       markers.add(marker);
     });
+  }
+
+
+  void _loadAllLocals(){
+    final box = Hive.box<Local>('Locals');
+    for (var local in box.values){
+      setState((){
+        markers.add(Marker(
+          markerId: MarkerId(local.name),
+          position: LatLng(local.coords.latitude, local.coords.longitude),
+          infoWindow: InfoWindow(title: local.name, snippet: local.address),
+          
+        ),
+        );
+      });
+    }
   }
 
  @override
 Widget build(BuildContext context) {
   return Scaffold(
       appBar: AppBar(
-        title: const Text('Localização com BLoC'),
+        title: const Text('Map'),
       ),
       body: Column(
         children: [
-          // BlocListener com um widget filho vazio
           BlocListener<LocationBloc, LocationState>(
             listener: (context, state) {
               if (state is LocationLoaded) {
@@ -96,14 +113,15 @@ Widget build(BuildContext context) {
                     markerId: const MarkerId("current_location"),
                     position: newPos,
                     infoWindow: const InfoWindow(title: 'Localização Atual'),
+                    icon: BitmapDescriptor.defaultMarkerWithHue((BitmapDescriptor.hueGreen))
                   ));
                 });
+                _loadAllLocals();
                 _goToCurrentPosition(newPos);
               }
             },
-            child: const SizedBox.shrink(), // Widget filho vazio
+            child: const SizedBox.shrink(), 
           ),
-          // BlocBuilder separado
           Expanded(
             child: BlocBuilder<LocationBloc, LocationState>(
               builder: (context, state) {
@@ -114,7 +132,7 @@ Widget build(BuildContext context) {
                   onMapCreated: _onMapCreated,
                   initialCameraPosition: CameraPosition(
                     target: currentPosition!,
-                    zoom: 11.0,
+                    zoom: 13.0,
                   ),
                   markers: markers,
                 ); 

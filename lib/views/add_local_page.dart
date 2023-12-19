@@ -144,13 +144,14 @@ void _addLocal() {
     coords: _currentCoords!,
   );
 
+  
+
   context.read<LocalBloc>().add(AddLocal(newLocal));
   ScaffoldMessenger.of(context).showSnackBar(
     const SnackBar(content: Text('Location Added Successfully!')),
   );
   Navigator.pop(context);
 
-  //_printLocalData();
 }
 
 void _showErrorSnackBar(String message) {
@@ -158,11 +159,6 @@ void _showErrorSnackBar(String message) {
     SnackBar(content: Text(message)),
   );
 }
-  void _printLocalData() {
-    final box = Hive.box<Local>('Locals');
-    print('Dados atuais na Box:');
-    for (var local in box.values) {
-      print('Nome: ${local.name}, Tipo: ${local.type}, Endereço: ${local.address}, Foto: ${local.fotoPath}');
-    }
-  }
+
+
 }

@@ -18,4 +18,5 @@ class LocalBloc extends Bloc<LocalEvent, LocalState> {
     await localBox.add(event.local);
     emit(LocalsLoaded(localBox.values.toList()));
   }
+  
 }

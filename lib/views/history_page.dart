@@ -32,41 +32,73 @@ class LocaisHistoriaPage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('History & Culture'),
-      ),
-      body: ListView.builder(
-        itemCount: locals.length,
-        itemBuilder: (context, index) {
-          final local = locals[index];
-          return Card(
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () => _showFullImage(context, local.fotoPath),
-                  child: local.fotoPath != null 
-                    ? SizedBox(
-                        height: 200, 
-                        width: double.infinity, 
-                        child: Image.file(
-                          File(local.fotoPath!),
-                          fit: BoxFit.cover,
+    appBar: AppBar(
+      title: const Text('History & Culture'),
+    ),
+    body: ListView.builder(
+      itemCount: locals.length,
+      itemBuilder: (context, index) {
+        final local = locals[index];
+        return Card(
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: () => _showFullImage(context, local.fotoPath),
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    local.fotoPath != null 
+                      ? SizedBox(
+                          height: 200, 
+                          width: double.infinity, 
+                          child: Image.file(
+                            File(local.fotoPath!),
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : const SizedBox(height: 200, child: Placeholder()),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        width: double.infinity,
+                        color: Colors.black.withOpacity(0.5),
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          local.name,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                offset: Offset(1.0, 1.0),
+                                blurRadius: 3.0,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                            ],
+                          ),
                         ),
-                      )
-                    : const SizedBox(height: 200, child: Placeholder()), 
+                      ),
+                    ),
+                  ],
                 ),
-                Text(local.address),
-                ElevatedButton(
-                  onPressed: () => _openMapPage(context, local),
-                  child: const Text('Localização'),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(local.address),
+              ),
+              ElevatedButton(
+                onPressed: () => _openMapPage(context, local),
+                child: const Text('Location'),
+              ),
+            ],
+          ),
+        );
+      },
+    ),
+  );
+}
 
   void _showFullImage(BuildContext context, String? imagePath) {
     if (imagePath == null) return;
