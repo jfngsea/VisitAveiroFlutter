@@ -97,8 +97,11 @@ void initState() {
 Widget build(BuildContext context) {
   return Scaffold(
       appBar: AppBar(
-        title: const Text('Map'),
+        title: const Text('Map' , style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
+      extendBodyBehindAppBar: true,
       body: Column(
         children: [
           BlocListener<LocationBloc, LocationState>(

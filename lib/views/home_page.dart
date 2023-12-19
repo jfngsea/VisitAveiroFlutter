@@ -43,9 +43,8 @@ class HomePage extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(150, 40), // Define a largura e altura mínimas do botão
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Pode ajustar o padding se necessário
-                    // Outros estilos podem ser adicionados aqui
+                    minimumSize: const Size(150, 40), 
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   ),
                   child: const Text(
                     'Enter',

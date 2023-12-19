@@ -32,16 +32,35 @@ class _AddLocalPageState extends State<AddLocalPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicionar Local'),
+        title: const Text('Add Location', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
-      body: Padding(
+      extendBodyBehindAppBar: true,
+       body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/assets/images/city_of_aveiro.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.5),
+        ),
+      child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+          const SizedBox(height: 100),
             TextField(
               controller: _nomeController,
-              decoration: const InputDecoration(labelText: 'Nome do Local'),
+              decoration: const InputDecoration(labelText: 'Location Name',
+              labelStyle: TextStyle(color: Colors.white),
+              fillColor: Colors.white30,
+              filled: true,),
             ),
+            const SizedBox(height: 30),
             DropdownButton<LocalType>(
               value: _selectedType,
               onChanged: (LocalType? newValue) {
@@ -49,13 +68,18 @@ class _AddLocalPageState extends State<AddLocalPage> {
                   _selectedType = newValue!;
                 });
               },
+              dropdownColor: Colors.grey[800], // Definindo a cor de fundo do dropdown
               items: LocalType.values.map<DropdownMenuItem<LocalType>>((LocalType value) {
                 return DropdownMenuItem<LocalType>(
                   value: value,
-                  child: Text(value.toString().split('.').last),
+                  child: Text(
+                    value.toString().split('.').last,
+                    style: const TextStyle(color: Colors.white), // Texto branco
+                  ),
                 );
               }).toList(),
             ),
+            const SizedBox(height: 30),
             if (_fotoPath != null)
               Image.file(
                 File(_fotoPath!),
@@ -63,23 +87,28 @@ class _AddLocalPageState extends State<AddLocalPage> {
                 height: 300,
                 fit: BoxFit.cover,
             ),
+              const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => _capturePhoto(),
-              child: const Text('Capturar Foto'),
+              child: const Text('Capture Photo'),
             ),
+            const SizedBox(height: 50),
            _address == null
             ? ElevatedButton(
                 onPressed: () => _getCurrentAddress(),
-                child: const Text('Usar Localização Atual para Endereço'),
+                child: const Text('Use Current Location for Address'),
               )
-            : Text('Endereço: $_address'),
+            : Text('$_address', style: const TextStyle(color: Colors.white),),
+            const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () => _addLocal(),
-              child: const Text('Adicionar Local'),
+              child: const Text('Add Location'),
             ),
           ],
         ),
       ),
+        ),
+       ),
     );
   }
 
@@ -103,7 +132,7 @@ void _getCurrentAddress() async {
    });
    EasyLoading.dismiss();
    ScaffoldMessenger.of(context).showSnackBar(
-     const SnackBar(content: Text('Morada obtida com sucesso!')),
+     const SnackBar(content: Text('Address obtained successfully!')),
    );
  } catch (e) {
    EasyLoading.dismiss();
@@ -114,13 +143,13 @@ void _getCurrentAddress() async {
 void _addLocal() {
   // Verifica se o nome do local foi preenchido
   if (_nomeController.text.isEmpty) {
-    _showErrorSnackBar('Por favor, write the name of the location');
+    _showErrorSnackBar('Please, write the name of the location');
     return;
   }
 
   // Verifica se o endereço foi obtido
   if (_address == null || _address!.isEmpty) {
-    _showErrorSnackBar('Por favor, obtenha o endereço.');
+    _showErrorSnackBar('Please get the address.');
     return;
   }
 
