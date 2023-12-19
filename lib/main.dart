@@ -19,7 +19,7 @@ Future<void> addLocalToHiveBox() async {
         name: "Ria de Aveiro",
         type: LocalType.Lazer,
         address: "Rua Glória e Vera Cruz",
-        fotoPath: "bloc/test.jpg",
+        fotoPath: "VisitAveiroFlutter/bloc/test.jpg",
         coords: const LatLng(40.6412, -8.6536),
       );
 
@@ -27,7 +27,7 @@ Future<void> addLocalToHiveBox() async {
         name: "Universidade de Aveiro",
         type: LocalType.HistoriaCultura,
         address: "Campus Universitário de Santiago",
-        fotoPath: "bloc/test.jpg",
+        fotoPath: "VisitAveiroFlutter/bloc/test.jpg",
         coords: const LatLng(40.629728, -8.657860),
       );
       await box.add(localTest);

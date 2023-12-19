@@ -57,7 +57,7 @@ void initState() {
 
   void _goToCurrentPosition(LatLng position) {
     mapController?.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(target: position, zoom: 20.0),
+      CameraPosition(target: position, zoom: 14.0),
     ));
     _addCurrentLocationMarker(position);
   }
@@ -87,7 +87,6 @@ void initState() {
           markerId: MarkerId(local.name),
           position: LatLng(local.coords.latitude, local.coords.longitude),
           infoWindow: InfoWindow(title: local.name, snippet: local.address),
-          
         ),
         );
       });
@@ -132,7 +131,7 @@ Widget build(BuildContext context) {
                   onMapCreated: _onMapCreated,
                   initialCameraPosition: CameraPosition(
                     target: currentPosition!,
-                    zoom: 13.0,
+                    zoom: 14.0,
                   ),
                   markers: markers,
                 ); 
