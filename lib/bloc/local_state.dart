@@ -8,10 +8,13 @@ class LocalLoading extends LocalState {}
 
 class LocalsLoaded extends LocalState {
   final List<Local> locais;
-  LocalsLoaded(this.locais);
+  final bool isCache;
+  final bool isOnline;
+  LocalsLoaded(this.locais, this.isCache, this.isOnline);
 }
 
 class LocalError extends LocalState {
   final String message;
   LocalError(this.message);
 }
+

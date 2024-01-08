@@ -1,9 +1,7 @@
+import 'package:VisitAveiroFlutter/models/local.dart';
+import 'package:VisitAveiroFlutter/views/curator_page.dart';
+import 'package:VisitAveiroFlutter/views/list_page_content.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:VisitAveiroFlutter/views/add_local_page.dart';
-import 'package:VisitAveiroFlutter/views/gastronomy_page.dart';
-import 'package:VisitAveiroFlutter/views/history_page.dart';
-import 'package:VisitAveiroFlutter/views/leisure_page.dart';
 import 'package:VisitAveiroFlutter/views/map_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -52,7 +50,12 @@ class _MainPageState extends State<MainPage> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const LocaisLazerPage()),
+                            MaterialPageRoute(
+                                builder: (context) => const ListPage(
+                                    type: LocalType.Lazer,
+                                    pagename: 'Leisure'
+                                )
+                            ),
                           );
                         },
                         child: const Text('Leisure'),
@@ -66,7 +69,12 @@ class _MainPageState extends State<MainPage> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const LocaisGastronomiaPage()),
+                            MaterialPageRoute(
+                                builder: (context) => const ListPage(
+                                    type: LocalType.Gastronomia,
+                                    pagename: 'Gastronomy'
+                                )
+                            ),
                           );
                         },
                         child: const Text('Gastronomy'),
@@ -81,7 +89,12 @@ class _MainPageState extends State<MainPage> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const LocaisHistoriaPage()),
+                            MaterialPageRoute(
+                                builder: (context) => const ListPage(
+                                    type: LocalType.Historia,
+                                    pagename: 'History & Culture'
+                                )
+                            ),
                           );
                         },
                         child: const Text('History & Culture'),
@@ -111,10 +124,10 @@ class _MainPageState extends State<MainPage> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const AddLocalPage()),
+                            MaterialPageRoute(builder: (context) => const CuratorPage()),
                           );
                         },
-                        child: const Text('Add Local    +'),
+                        child: const Text('Curator Zone'),
                       ),
                     ),
                   ],

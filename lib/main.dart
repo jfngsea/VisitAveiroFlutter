@@ -1,3 +1,5 @@
+import 'package:VisitAveiroFlutter/bloc/local_event.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -8,9 +10,16 @@ import 'package:VisitAveiroFlutter/services/location_service.dart';
 import 'package:VisitAveiroFlutter/views/home_page.dart';
 import 'package:VisitAveiroFlutter/models/local.dart';
 import 'package:VisitAveiroFlutter/bloc/local_bloc.dart';
+import 'package:VisitAveiroFlutter/providers/auth_provider.dart';
+
+import 'package:provider/provider.dart';
+
+import 'firebase_options.dart';
 
 // Importe outros arquivos necessários
 Future<void> addLocalToHiveBox() async {
+  
+  
   try {
     var box = Hive.box<Local>('Locals');
     if (box.isEmpty) {
@@ -25,7 +34,7 @@ Future<void> addLocalToHiveBox() async {
 
       var localTest2 = Local(
         name: "Universidade de Aveiro",
-        type: LocalType.HistoriaCultura,
+        type: LocalType.Historia,
         address: "Campus Universitário de Santiago",
         fotoPath: "lib/assets/images/test.jpg",
         coords: const LatLng(40.629728, -8.657860),
@@ -65,12 +74,14 @@ void main() async {
 
 
   await Hive.openBox<Local>('Locals');
-  
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+
   runApp(const MyApp());
   //clearHiveBox();
   WidgetsBinding.instance.addPostFrameCallback((_) async{
     await addLocalToHiveBox();
-    await printLocalData();
+   await printLocalData();
   });
   
 }
@@ -83,16 +94,21 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LocalBloc>(
-          create: (context) => LocalBloc(),
+          create: (context) => LocalBloc()..add(GetAllLocals()),
         ),
         BlocProvider<LocationBloc>(
           create: (context) => LocationBloc(locationService: LocationService()),
         ),
       ],
-      child: MaterialApp(
-        title: 'Visit-Aveiro',
-        home: const HomePage(),
-        builder: EasyLoading.init(),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ],
+        child:MaterialApp(
+          title: 'Visit-Aveiro',
+          home: const HomePage(),
+          builder: EasyLoading.init(),
+        ),
       ),
     );
   }

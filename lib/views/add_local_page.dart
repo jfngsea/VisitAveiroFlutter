@@ -9,10 +9,10 @@ import 'package:VisitAveiroFlutter/bloc/local_bloc.dart';
 import 'package:VisitAveiroFlutter/bloc/local_event.dart';
 import 'package:VisitAveiroFlutter/models/local.dart';
 import 'package:VisitAveiroFlutter/services/location_service.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
 class AddLocalPage extends StatefulWidget {
-  const AddLocalPage({super.key});
+  const AddLocalPage({super.key, required this.userid});
+
+  final String userid;
 
   @override
   _AddLocalPageState createState() => _AddLocalPageState();
@@ -102,7 +102,7 @@ class _AddLocalPageState extends State<AddLocalPage> {
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () => _addLocal(),
-              child: const Text('Add Location'),
+              child: const Text('Add Local'),
             ),
           ],
         ),
@@ -171,13 +171,14 @@ void _addLocal() {
     address: _address!,
     fotoPath: _fotoPath, 
     coords: _currentCoords!,
+    userid: widget.userid,
   );
 
   
 
   context.read<LocalBloc>().add(AddLocal(newLocal));
   ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(content: Text('Location Added Successfully!')),
+    const SnackBar(content: Text('Adding Local...')),
   );
   Navigator.pop(context);
 

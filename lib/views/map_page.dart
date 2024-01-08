@@ -81,16 +81,15 @@ void initState() {
 
   void _loadAllLocals(){
     final box = Hive.box<Local>('Locals');
-    for (var local in box.values){
+
       setState((){
-        markers.add(Marker(
+
+        markers.addAll(box.values.map((local) => Marker(
           markerId: MarkerId(local.name),
           position: LatLng(local.coords.latitude, local.coords.longitude),
           infoWindow: InfoWindow(title: local.name, snippet: local.address),
-        ),
-        );
+        ),).toList());
       });
-    }
   }
 
  @override

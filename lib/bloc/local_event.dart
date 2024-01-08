@@ -7,4 +7,13 @@ class AddLocal extends LocalEvent {
   AddLocal(this.local);
 }
 
+class DeleteLocal extends LocalEvent {
+  final Local local;
+  DeleteLocal(this.local);
+}
+
+class GetAllLocals extends LocalEvent {
+  GetAllLocals();
+}
+
 // Outros eventos como UpdateLocal, DeleteLocal, etc., conforme necessário

@@ -62,7 +62,7 @@ class LocalTypeAdapter extends TypeAdapter<LocalType> {
       case 0:
         return LocalType.Lazer;
       case 1:
-        return LocalType.HistoriaCultura;
+        return LocalType.Historia;
       case 2:
         return LocalType.Gastronomia;
       default:
@@ -76,7 +76,7 @@ class LocalTypeAdapter extends TypeAdapter<LocalType> {
       case LocalType.Lazer:
         writer.writeByte(0);
         break;
-      case LocalType.HistoriaCultura:
+      case LocalType.Historia:
         writer.writeByte(1);
         break;
       case LocalType.Gastronomia:
