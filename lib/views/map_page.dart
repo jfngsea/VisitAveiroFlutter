@@ -1,5 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, must_be_immutable
 
+import 'package:VisitAveiroFlutter/bloc/local_bloc.dart';
+import 'package:VisitAveiroFlutter/bloc/local_state.dart';
 import 'package:VisitAveiroFlutter/models/local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,19 +111,29 @@ Widget build(BuildContext context) {
                 final newPos = state.position;
                 setState(() {
                   currentPosition = newPos;
-                  markers.clear();
-                  markers.add(Marker(
-                    markerId: const MarkerId("current_location"),
-                    position: newPos,
-                    infoWindow: const InfoWindow(title: 'Localização Atual'),
-                    icon: BitmapDescriptor.defaultMarkerWithHue((BitmapDescriptor.hueGreen))
-                  ));
+
                 });
-                _loadAllLocals();
+                //_loadAllLocals();
                 _goToCurrentPosition(newPos);
               }
             },
             child: const SizedBox.shrink(), 
+          ),
+          BlocListener<LocalBloc, LocalState>(
+            listener: (context, state) {
+              if (state is LocalsLoaded) {
+                setState(() {
+                  markers.clear();
+                  markers.addAll(state.locais.map((local) => Marker(
+                    markerId: MarkerId(local.name),
+                    position: LatLng(local.coords.latitude, local.coords.longitude),
+                    infoWindow: InfoWindow(title: local.name, snippet: local.address),
+                  ),).toList());
+
+                });
+              }
+            },
+            child: const SizedBox.shrink(),
           ),
           Expanded(
             child: BlocBuilder<LocationBloc, LocationState>(
@@ -131,6 +143,8 @@ Widget build(BuildContext context) {
                 }
                 return GoogleMap(
                   onMapCreated: _onMapCreated,
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: true,
                   initialCameraPosition: CameraPosition(
                     target: currentPosition!,
                     zoom: 14.0,
