@@ -46,7 +46,7 @@ void initState() {
   if (!status.isGranted) {
     status = await Permission.location.request();
     if (!status.isGranted) {
-      // Lide com a negação da permissão aqui
+      
     }
   }
 }

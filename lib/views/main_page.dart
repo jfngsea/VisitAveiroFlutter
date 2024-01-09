@@ -39,13 +39,12 @@ class _MainPageState extends State<MainPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center, // Alinhamento central
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     const SizedBox(height: 20),
-                    // Cada botão em um Container para controlar a largura
                     SizedBox(
                       width: 200,
-                      height: 50, // Largura dos botões
+                      height: 50, 
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -81,7 +80,6 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Botão História e Cultura
                     SizedBox(
                       width: 200,
                       height: 50,
@@ -101,7 +99,6 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     const SizedBox(height: 100),
-                    // Botão Mostrar no Mapa
                     SizedBox(
                       width: 200,
                       child: ElevatedButton.icon(
@@ -117,7 +114,6 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     const SizedBox(height: 100),
-                    // Botão Add Local
                     SizedBox(
                       width: 200,
                       child: ElevatedButton(

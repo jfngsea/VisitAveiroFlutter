@@ -16,7 +16,6 @@ import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
-// Importe outros arquivos necessários
 Future<void> addLocalToHiveBox() async {
   
   

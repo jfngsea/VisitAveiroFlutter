@@ -15,7 +15,6 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   emit(LocationLoading());
   try {
     final latLng = await locationService.getCurrentLocation();
-    print("Emitindo LocationLoaded com posição: $latLng");
     emit(LocationLoaded(latLng));
   } catch (error) {
     emit(LocationError(error.toString()));

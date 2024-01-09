@@ -64,7 +64,7 @@ class ListPageContent extends StatelessWidget {
             if(state.locais.isEmpty){
               return const Center(
                 child: Text(
-                  'Não existem pontos de interesse disponíveis.',
+                  'There are no points of interest available for this type.',
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.grey,
@@ -74,18 +74,34 @@ class ListPageContent extends StatelessWidget {
             }
 
 
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  if(state.isCache)
-                    Text(state.isOnline?"Using Cache, Fetching new data...":"Using Cache. You are offline.")
-                  else
-                    const Text("Fresh Results"),
-                  ...state.locais.where((element) => element.type==type).map((e) => LocalCard(local: e))
-                ],
-              ),
-            );
-          }
+          return SingleChildScrollView(
+          child: state.locais.where((element) => element.type == type).isEmpty
+              ? Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3),
+                    child: const Text(
+                      'There are no points of interest available.',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Color.fromARGB(255, 221, 221, 221),
+                      ),
+                    ),
+                  ),
+                )
+              : Column(
+                  children: [
+                    if (state.isCache)
+                      Text(state.isOnline ? "Using Cache, Fetching new data..." : "Using Cache. You are offline.")
+                    else 
+                      const Text("Fresh Results"),
+                    ...state.locais.where((element) => element.type == type).map((e) => LocalCard(local: e)),
+                  ],
+                ),
+        );
+
+
+
+        }
 
           else if(state is LocalError){
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
