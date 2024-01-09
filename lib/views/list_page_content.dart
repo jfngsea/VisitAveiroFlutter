@@ -17,7 +17,7 @@ class ListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(pagename, style: TextStyle(color: Colors.white)),
+        title: Text(pagename, style: const TextStyle(color: Colors.white)),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -38,9 +38,7 @@ class ListPage extends StatelessWidget {
             ),
           ),
           SafeArea(
-            child: Center(
               child: ListPageContent(type: type,),
-            ),
           )
         ],
       ),
@@ -59,12 +57,12 @@ class ListPageContent extends StatelessWidget {
     return BlocBuilder<LocalBloc, LocalState>(
         builder: (context, state) {
           if(state is LocalLoading || state is LocalInitial){
-            return LoadingWidget();
+            return const LoadingWidget();
           }
 
           else if(state is LocalsLoaded){
             if(state.locais.isEmpty){
-              return Center(
+              return const Center(
                 child: Text(
                   'Não existem pontos de interesse disponíveis.',
                   style: TextStyle(
@@ -82,7 +80,7 @@ class ListPageContent extends StatelessWidget {
                   if(state.isCache)
                     Text(state.isOnline?"Using Cache, Fetching new data...":"Using Cache. You are offline.")
                   else
-                    Text("Fresh Results"),
+                    const Text("Fresh Results"),
                   ...state.locais.where((element) => element.type==type).map((e) => LocalCard(local: e))
                 ],
               ),
@@ -94,7 +92,7 @@ class ListPageContent extends StatelessWidget {
             return Text(state.message);
           }
           else {
-            return Text("unkown local bloc state");
+            return const Text("unkown local bloc state");
           }
 
         }

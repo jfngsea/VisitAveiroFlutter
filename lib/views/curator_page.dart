@@ -100,7 +100,7 @@ class CuratorPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Places",
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
@@ -113,11 +113,11 @@ class CuratorPage extends StatelessWidget {
                                   ),
                                 );
                               },
-                              icon: Icon(Icons.add, color: Colors.white,)
+                              icon: const Icon(Icons.add, color: Colors.white,)
                           )
                         ],
                       ),
-                      Divider(color: Colors.white,),
+                      const Divider(color: Colors.white,),
                       CuratorPageContent(user: auth.appuser!)
                     ],
                   );
@@ -142,7 +142,7 @@ class CuratorPage extends StatelessWidget {
                                 ),
                               );
                             },
-                            child: Text("Sign In")
+                            child: const Text("Sign In")
                         )
                       ],
                     ),
@@ -171,7 +171,7 @@ class CuratorPageContent extends StatelessWidget {
         builder: (context, state) {
         print("@curator bloc builder, state: ${state.toString()}");
           if(state is LocalLoading || state is LocalInitial){
-            return LoadingWidget();
+            return const LoadingWidget();
           }
 
           else if(state is LocalsLoaded){
@@ -181,7 +181,7 @@ class CuratorPageContent extends StatelessWidget {
                 if(state.isCache)
                   Text(state.isOnline?"Using Cache, Fetching new data...":"Using Cache. You are offline.")
                 else
-                  Text("Fresh Results"),
+                  const Text("Fresh Results"),
                 ...state.locais.where((element) => element.userid==user.id).map((e) => LocalCard(local: e, onDeleteClick: (local){
                   context.read<LocalBloc>().add(DeleteLocal(local));
 
@@ -195,7 +195,7 @@ class CuratorPageContent extends StatelessWidget {
             return Text(state.message);
           }
           else {
-            return Text("unkown local bloc state");
+            return const Text("unkown local bloc state");
           }
 
         }

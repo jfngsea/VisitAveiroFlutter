@@ -79,7 +79,7 @@ class _SignInPageState extends State<SignInPage> {
                   error.isNotEmpty
                       ? Text(
                     error,
-                    style: const TextStyle(color: Colors.red, fontSize: 15),
+                    style: const TextStyle(color: Color.fromARGB(255, 255, 17, 0), fontSize: 15),
                   )
                       : const Text(""),
                   Padding(
@@ -87,9 +87,21 @@ class _SignInPageState extends State<SignInPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Email",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
                       ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                        labelText: "Email",
+                        labelStyle: TextStyle(
+                          color: Color.fromARGB(255, 202, 202, 202), // You can adjust the whiteness here
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.white),
                       validator: (input) {
                         if (input == null || input.isEmpty) {
                           return "Provide an Email";
@@ -107,9 +119,21 @@ class _SignInPageState extends State<SignInPage> {
                     child: TextFormField(
                       obscureText: true,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
                         labelText: "Password",
+                        labelStyle: TextStyle(
+                          color: Color.fromARGB(255, 202, 202, 202), // You can adjust the whiteness here
+                        ),
                       ),
+                      style: const TextStyle(color: Colors.white),
                       validator: (input) {
                         if (input == null) {
                           return "Provide a password.";
@@ -122,23 +146,29 @@ class _SignInPageState extends State<SignInPage> {
                   Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 15),
+                        padding: const EdgeInsets.only(top: 40),
                         child: ElevatedButton(
                           onPressed: onSingInButtonPress,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
+                          child: const Padding(
+                            padding: EdgeInsets.all(10),
                             child: Text(
                               "Sign In",
-                              style: const TextStyle(color: Colors.white,
+                              style: TextStyle(color: Color.fromARGB(255, 0, 0, 0),
                                   fontSize: 20),
                             ),
                           ),
                         ),
                       ),
-
+/*
                       TextButton(
                           onPressed: onSingInButtonPress,
-                          child: Text("Sign up")),
+                          child: const Text(
+                              "Sign Up",
+                              style: TextStyle(color: Color.fromARGB(255, 202, 202, 202), // You can adjust the whiteness here
+                              fontSize: 20),
+                            ),
+                      ),
+                      */
                     ],
                   ),
 
@@ -163,7 +193,7 @@ class _SignInPageState extends State<SignInPage> {
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.5),
+              color: Colors.black.withOpacity(0.5),
           ),
           child: Center(
             child: mainContent,
